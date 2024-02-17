@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body, .container {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: #333;
+        }
+
+        a {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 4px;
+            color: #fff;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            background-color: #333;
+            margin-top: 20px;
+        }
+
+        a:hover {
+            background-color: #555;
+        }
+
+        .students-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #333;
+            color: white;
+        }
+
+        .delete-student-container {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .delete-student-container h1 {
+            color: #333;
+            margin-top: 0;
+        }
+
+        .delete-student-container p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        form label {
+            width: 48%;
+            margin-bottom: 10px;
+        }
+
+        form input[type="text"],
+        form input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        form button {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        form button:hover {
+            background-color: #555;
+        }
+
+        /* CSS cho header */
+        .header {
+            background-color: #333;
+            color: #ffffff;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo h1 {
+            color: #ffffff; 
+            margin: 0;
+        }
+
+        .nav-links {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-right: 10px;
+        }
+
+        .nav-links li a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            background-color: #000000;
+            transition: background-color 0.3s;
+        }
+
+        .nav-links li a:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <h1>Student</h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="/login" id="logout-btn" class="nav-link">Logout</a></li>
+        </ul>
+    </header>
+
+    <div class="container">
+
+        <h2>Add New Student</h2>
+        <form action="/dashboard" method="post">
+            <label for="id">ID:</label>
+            <input type="text" name="id" required>
+
+            <label for="name">Name:</label>
+            <input type="text" name="name" required>
+
+            <label for="address">Address:</label>
+            <input type="text" name="address" required>
+
+            <label for="phoneNumber">Phone Number:</label>
+            <input type="text" name="phoneNumber" required>
+
+            <label for="age">Age:</label>
+            <input type="number" name="age" required>
+
+            <label for="grade">Grade:</label>
+            <input type="text" name="grade" required>
+
+            <button type="submit">Add Student</button>
+        </form>
+
+
+        <table class="students-table">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Phone Number</th>
+                <th>Age</th>
+                <th>Grade</th>
+                <th>Action</th> 
+            </tr>
+            <% students.forEach(student => { %>
+                <tr>
+                    <td><%= student.id %></td>
+                    <td><%= student.name %></td>
+                    <td><%= student.address %></td>
+                    <td><%= student.phoneNumber %></td>
+                    <td><%= student.age %></td>
+                    <td><%= student.grade %></td>
+                    <td>
+                        <form action="/dashboard/delete/<%= student._id %>" method="post">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }); %>
+        </table>
+
+    </div>
+</body>
+</html>
